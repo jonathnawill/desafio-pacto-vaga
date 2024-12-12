@@ -14,16 +14,15 @@ public class Skill implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     @Id
-    @SequenceGenerator(name = "pacto-custom-generator-skill", allocationSize = 1, sequenceName = "id_skill_seq")
+    @SequenceGenerator(name = "pacto-custom-generator-skill", allocationSize = 1, sequenceName = "ID_SKILL_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pacto-custom-generator-skill")
-    @Column(name = "id_skill", unique = true, nullable = false)
-    private Long skillId;
+    @Column(name = "ID_SKILL", unique = true, nullable = false)
+    private Long id;
 
-    @Column(name = "skill_name", unique = true, nullable = false)
+    @Column(name = "SKILL_NAME", unique = true, nullable = false)
     private String skillName;
 
-    @Column(name = "experience_years", nullable = false)
+    @Column(name = "EXPERIENCE_YEARS", nullable = false)
     private Integer experienceYears;
 }

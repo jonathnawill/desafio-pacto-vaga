@@ -8,8 +8,8 @@ import java.util.Map;
 
 public enum UserRoleEnum {
 
-    DEFAULT_USER(1,"DEFAULT_USER"),
-    ADMIN_USER(2,"ADMIN_USER");
+    DEFAULT_USER(1, "DEFAULT_USER"),
+    ADMIN_USER(2, "ADMIN_USER");
 
     private Integer idUserRole;
 
@@ -17,7 +17,7 @@ public enum UserRoleEnum {
 
     private static final Map<Integer, UserRoleEnum> idToUserRole = new HashMap<>();
 
-    private UserRoleEnum(Integer idUserRole,String descricao) {
+    private UserRoleEnum(Integer idUserRole, String descricao) {
         this.idUserRole = idUserRole;
         setDescricao(descricao);
     }
