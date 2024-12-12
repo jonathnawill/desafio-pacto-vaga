@@ -2,8 +2,8 @@ package com.desafio.pacto.entities.listener;
 
 import com.desafio.pacto.entities.DateEntity;
 import com.desafio.pacto.entities.DateInterface;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

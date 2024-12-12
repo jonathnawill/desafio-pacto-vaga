@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 
 @Service
 public class TokenService {
@@ -21,8 +22,8 @@ public class TokenService {
 	@Value("${api.security.token.secret}")
 	private String secret;
 
-	private Instant genExpirationDate() {
-		return LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-03:00"));
+	private Date genExpirationDate() {
+		return Date.from(LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-03:00")));
 	}
 
 	public String generateToken(User user) {

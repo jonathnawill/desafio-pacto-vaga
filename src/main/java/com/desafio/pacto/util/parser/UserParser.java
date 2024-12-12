@@ -19,6 +19,7 @@ public class UserParser {
     public static User deDTORegister(RegisterUserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
+        user.setUsername(userDTO.getUsername());
         user.setUserRole(UserRoleEnum.DEFAULT_USER);
 
         return user;

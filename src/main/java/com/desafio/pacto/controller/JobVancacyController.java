@@ -17,19 +17,19 @@ public class JobVancacyController {
     @Autowired
     private JobVacancyService jobVacancyService;
 
-    @PostMapping()
+    @PostMapping("/create")
     public ResponseEntity<JobVacancyDTO> createJobVacancy(@RequestBody JobVacancyDTO jobVacancyDTO) {
         JobVacancyDTO createdJobVacancy = jobVacancyService.createJobVacancy(jobVacancyDTO);
         return new ResponseEntity<>(createdJobVacancy, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<JobVacancyDTO>> listJobVacancies() {
         List<JobVacancyDTO> jobVacancies = jobVacancyService.listJobVacancies();
         return new ResponseEntity<>(jobVacancies, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteJobVacancy(@PathVariable Long id) {
         jobVacancyService.deleteJobVacancy(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

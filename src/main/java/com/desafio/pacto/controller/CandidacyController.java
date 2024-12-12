@@ -24,7 +24,7 @@ public class CandidacyController {
     }
 
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<CandidacyDTO>> listCandidacies() {
         List<CandidacyDTO> candidacies = candidacyService.listCandidacies();
         return new ResponseEntity<>(candidacies, HttpStatus.OK);
@@ -52,7 +52,7 @@ public class CandidacyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCandidacy(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCandidacy(@PathVariable Long id) throws Exception {
         candidacyService.deleteCandidacy(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

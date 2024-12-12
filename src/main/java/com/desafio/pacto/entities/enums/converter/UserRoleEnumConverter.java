@@ -1,8 +1,8 @@
 package com.desafio.pacto.entities.enums.converter;
 
 import com.desafio.pacto.entities.enums.UserRoleEnum;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Convert;
+import javax.persistence.AttributeConverter;
+import javax.persistence.Convert;
 
 @Convert
 public class UserRoleEnumConverter implements AttributeConverter<UserRoleEnum, Integer> {

@@ -1,7 +1,7 @@
 package com.desafio.pacto.entities;
 
 import com.desafio.pacto.entities.listener.EntityCreateUpdateListener;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;

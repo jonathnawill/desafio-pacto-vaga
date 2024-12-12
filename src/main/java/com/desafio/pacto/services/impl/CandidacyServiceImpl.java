@@ -11,7 +11,7 @@ import com.desafio.pacto.repositories.JobVacancyRepository;
 import com.desafio.pacto.repositories.UserRepository;
 import com.desafio.pacto.services.CandidacyService;
 import com.desafio.pacto.util.parser.CandidacyParser;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,12 +37,12 @@ public class CandidacyServiceImpl implements CandidacyService {
     @Override
     public CandidacyDTO applyToJob(CandidacyDTO candidacyDTO) {
 
-
         JobVacancy jobVacancy = jobVacancyRepository.findById(candidacyDTO.getJobVacancy().getId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaga não encontrada"));
 
         User applicant = userRepository.findById(candidacyDTO.getUser().getId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+
 
         Candidacy candidacy = CandidacyParser.deDTO(candidacyDTO);
         candidacy.setJobVacancy(jobVacancy);

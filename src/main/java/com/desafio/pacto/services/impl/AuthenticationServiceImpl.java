@@ -10,7 +10,7 @@ import com.desafio.pacto.repositories.UserRepository;
 import com.desafio.pacto.services.AuthenticationService;
 import com.desafio.pacto.services.TokenService;
 import com.desafio.pacto.util.parser.UserParser;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

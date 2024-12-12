@@ -4,7 +4,7 @@ package com.desafio.pacto.entities;
 import com.desafio.pacto.entities.enums.UserRoleEnum;
 import com.desafio.pacto.entities.enums.converter.UserRoleEnumConverter;
 import com.desafio.pacto.entities.listener.EntityCreateUpdateListener;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -59,7 +59,7 @@ public class User implements Serializable, UserDetails, DateInterface{
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override

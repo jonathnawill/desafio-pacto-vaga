@@ -1,7 +1,7 @@
 package com.desafio.pacto.entities.enums.converter;
 
 import com.desafio.pacto.entities.enums.CandidacyStatusEnum;
-import jakarta.persistence.AttributeConverter;
+import javax.persistence.AttributeConverter;
 
 public class CandidacyStatusEnumConverter implements AttributeConverter<CandidacyStatusEnum, Integer> {
 

@@ -9,9 +9,9 @@ import java.util.Map;
 public enum CandidacyStatusEnum {
 
 
-    PENDING(1, "PENDING"),
-    APPROVED(2, "APPROVED"),
-    REJECTED(3, "REJECTED");
+    PENDING(1, "PENDENTE"),
+    APPROVED(2, "APROVADO"),
+    REJECTED(3, "REJEITADO");
 
     private final Integer idStatus;
     private final String description;

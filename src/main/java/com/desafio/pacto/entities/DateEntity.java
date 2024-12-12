@@ -1,8 +1,8 @@
 package com.desafio.pacto.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

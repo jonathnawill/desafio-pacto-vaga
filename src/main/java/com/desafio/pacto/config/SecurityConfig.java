@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
 	@Autowired
@@ -26,37 +24,32 @@ public class SecurityConfig {
 	@Autowired
 	private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
 
-
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity.csrf(csrf -> csrf.disable())
-
 				.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/h2-console/**", "/swagger-ui.html/**", "/v3/api-docs/**", "/swagger-ui/**",
-								"/actuator/**")
+						.antMatchers("/h2-console/**", "/swagger-ui.html/**", "/v3/api-docs/**", "/swagger-ui/**", "/actuator/**")
 						.permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll())
-
-				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
+						.antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+						.antMatchers("/api/job/**").permitAll()
+						.anyRequest().permitAll())
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-			throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
 	@Bean
-	PasswordEncoder passwordEnconder() {
+	public PasswordEncoder passwordEnconder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsServiceImpl).passwordEncoder(passwordEnconder());
 	}
-
 }
