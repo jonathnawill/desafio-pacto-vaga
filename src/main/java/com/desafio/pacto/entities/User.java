@@ -25,7 +25,7 @@ public class User implements Serializable, UserDetails, DateInterface{
 
     @Id
     @SequenceGenerator(name = "pacto-custom-generator-user", allocationSize = 1, sequenceName = "user_id_user_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user-custom-generator-user")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pacto-custom-generator-user")
     @Column(name = "id_user", unique = true, nullable = false)
     private Long id;
 

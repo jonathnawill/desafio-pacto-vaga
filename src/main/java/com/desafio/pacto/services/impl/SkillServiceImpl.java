@@ -8,8 +8,8 @@ import com.desafio.pacto.util.parser.JobVacancyParser;
 import com.desafio.pacto.util.parser.SkillParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +36,8 @@ public class SkillServiceImpl implements SkillService {
         return SkillParser.paraDTO(skill);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    @Override
     public List<SkillDTO> list(){
         List<Skill> skills = skillRepository.findAll();
         return skills.stream().map(SkillParser::paraDTO).collect(Collectors.toList());

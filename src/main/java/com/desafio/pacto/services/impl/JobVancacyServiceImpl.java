@@ -11,14 +11,11 @@ import com.desafio.pacto.repositories.SkillRepository;
 import com.desafio.pacto.repositories.UserRepository;
 import com.desafio.pacto.services.JobVacancyService;
 import com.desafio.pacto.util.parser.JobVacancyParser;
-import javax.transaction.Transactional;
-
 import com.desafio.pacto.util.parser.SkillParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -58,11 +55,13 @@ public class JobVancacyServiceImpl implements JobVacancyService {
                 skill = skillRepository.findById(skillDTO.getId())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skill não encontrada"));
             } else {
+
                 skill = skillRepository.save(SkillParser.deDTO(skillDTO));
             }
             skills.add(skill);
         }
 
+        jobVacancy.setRequiredSkills(skills);
         JobVacancy savedJobVacancy = jobVacancyRepository.save(jobVacancy);
 
         return JobVacancyParser.toDTO(savedJobVacancy);
@@ -70,7 +69,7 @@ public class JobVancacyServiceImpl implements JobVacancyService {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<JobVacancyDTO> listJobVacancies() {
     List<JobVacancy> jobs = jobVacancyRepository.findAll();
 
@@ -79,7 +78,7 @@ public class JobVancacyServiceImpl implements JobVacancyService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void deleteJobVacancy(Long jobId) {
 
         JobVacancy jobVacancy = jobVacancyRepository.findById(jobId).orElseThrow(() ->

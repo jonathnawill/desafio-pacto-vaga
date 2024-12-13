@@ -16,7 +16,7 @@ public class JobVacancy implements Serializable, DateInterface{
 
 
     @Id
-    @SequenceGenerator(name = " pacto-custom-generator-job_vacancy", allocationSize = 1,  sequenceName = "id_job_vacancy_seq")
+    @SequenceGenerator(name = "pacto-custom-generator-job_vacancy", allocationSize = 1,  sequenceName = "id_job_vacancy_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pacto-custom-generator-job_vacancy")
     @Column(name = "id_job_vacancy", unique = true, nullable = false)
     private Long id;
@@ -27,7 +27,7 @@ public class JobVacancy implements Serializable, DateInterface{
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "id_user_creator", nullable = false)
+    @Column(name = "ID_USER_CREATOR", nullable = false)
     private Long createdById;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

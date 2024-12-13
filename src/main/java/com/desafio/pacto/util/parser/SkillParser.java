@@ -15,7 +15,6 @@ public class SkillParser {
 
         public static Skill deDTO(SkillDTO skillDTO) {
             Skill skill = new Skill();
-            skill.setId(skillDTO.getId());
             skill.setSkillName(skillDTO.getSkillName());
             skill.setExperienceYears(skillDTO.getExperienceYears());
             return skill;
@@ -26,6 +25,7 @@ public class SkillParser {
             skillDTO.setId(skill.getId());
             skillDTO.setSkillName(skill.getSkillName());
             skillDTO.setExperienceYears(skill.getExperienceYears());
+            skillDTO.setDateEntity(skill.getDateEntity());
             return skillDTO;
         }
 

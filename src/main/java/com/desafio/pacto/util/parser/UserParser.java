@@ -11,7 +11,7 @@ public class UserParser {
     public static User deDTO(UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getName());
-        user.setUserRole(userDTO.getUserRole());
+        user.setUserRole(UserRoleEnum.DEFAULT_USER);
 
         return user;
     }
@@ -29,6 +29,8 @@ public class UserParser {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setUserRole(user.getUserRole().getDescricao());
         userDTO.setDateEntity(user.getDateEntity());
         return userDTO;
     }

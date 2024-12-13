@@ -11,10 +11,10 @@ import com.desafio.pacto.repositories.JobVacancyRepository;
 import com.desafio.pacto.repositories.UserRepository;
 import com.desafio.pacto.services.CandidacyService;
 import com.desafio.pacto.util.parser.CandidacyParser;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class CandidacyServiceImpl implements CandidacyService {
         Candidacy candidacy = CandidacyParser.deDTO(candidacyDTO);
         candidacy.setJobVacancy(jobVacancy);
         candidacy.setApplicant(applicant);
-        candidacy.setStatus(CandidacyStatusEnum.PENDING);
+
 
         Candidacy savedCandidacy = candidacyRepository.save(candidacy);
 
@@ -55,13 +55,14 @@ public class CandidacyServiceImpl implements CandidacyService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CandidacyDTO> listCandidacies() {
         List<Candidacy> candidacies = candidacyRepository.findAll();
         return candidacies.stream().map(CandidacyParser::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CandidacyDTO> listCandidaciesByJob(Long jobVacancyId) {
         List<Candidacy> candidacies = candidacyRepository.findByJobVacancyId(jobVacancyId);
 
@@ -69,7 +70,7 @@ public class CandidacyServiceImpl implements CandidacyService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CandidacyDTO> listCandidaciesByApplicant(Long applicantId) {
         List<Candidacy> candidacies = candidacyRepository.findByApplicantId(applicantId);
 

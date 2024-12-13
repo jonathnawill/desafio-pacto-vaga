@@ -10,12 +10,12 @@ import java.io.Serializable;
 @Entity
 @Table(name = "SKILL")
 @EntityListeners(EntityCreateUpdateListener.class)
-public class Skill implements Serializable {
+public class Skill implements Serializable, DateInterface {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @SequenceGenerator(name = "pacto-custom-generator-skill", allocationSize = 1, sequenceName = "ID_SKILL_seq")
+    @SequenceGenerator(name = "pacto-custom-generator-skill", allocationSize = 1, sequenceName = "id_skill_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pacto-custom-generator-skill")
     @Column(name = "ID_SKILL", unique = true, nullable = false)
     private Long id;
@@ -25,4 +25,8 @@ public class Skill implements Serializable {
 
     @Column(name = "EXPERIENCE_YEARS", nullable = false)
     private Integer experienceYears;
+
+    @Embedded
+    private DateEntity dateEntity;
 }
+

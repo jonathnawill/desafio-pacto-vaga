@@ -30,11 +30,11 @@ public class Candidacy implements Serializable, DateInterface {
     @JoinColumn(name = "applicant_id", nullable = false)
     private User applicant;
 
-    @Embedded
-    private DateEntity dateEntity;
-
     @Convert(converter = CandidacyStatusEnumConverter.class)
     @Column(name = "ID_CANDIDACY_STATUS")
     private CandidacyStatusEnum status;
+
+    @Embedded
+    private DateEntity dateEntity;
 
 }

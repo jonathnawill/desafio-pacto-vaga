@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,28 +42,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Transactional
 	public LoginResponseDTO loginUser(AuthenticationDTO data) {
-
 		try {
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-					data.getUserName(), data.getPassword());
+					data.getUsername(), data.getPassword());
 
 			Authentication authentication = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 			User user = (User) authentication.getPrincipal();
 
 
 			if (!user.getDateEntity().isActive()) {
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuario esta desativado");
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário desativado. Por favor, entre em contato com o suporte.");
 			}
 
 			String token = tokenService.generateToken(user);
 
 			return new LoginResponseDTO(user.getId(), user.getUsername(), user.getName(), token, "Bearer", user.getUserRole().getDescricao());
-		} catch (DisabledException  e) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Usuário ou senha incorretos. Por favor, tente novamente.");
-		} catch (Exception  e){
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Senha ou nome invalido");
+		} catch (BadCredentialsException e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Nome de usuário ou senha inválidos.");
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Erro de autenticação. Verifique suas credenciais.");
 		}
 	}
+
 
 
 	@Override

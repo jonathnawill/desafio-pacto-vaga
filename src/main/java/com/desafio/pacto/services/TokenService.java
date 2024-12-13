@@ -23,7 +23,7 @@ public class TokenService {
 	private String secret;
 
 	private Date genExpirationDate() {
-		return Date.from(LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-03:00")));
+		return Date.from(LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.of("-03:00")));
 	}
 
 	public String generateToken(User user) {

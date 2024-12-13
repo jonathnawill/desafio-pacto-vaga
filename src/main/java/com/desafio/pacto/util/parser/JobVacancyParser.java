@@ -11,7 +11,6 @@ public class JobVacancyParser {
         jobVacancy.setTitle(jobVacancyDTO.getTitle());
         jobVacancy.setDescription(jobVacancyDTO.getDescription());
         jobVacancy.setCreatedById(jobVacancyDTO.getCreatedById());
-        jobVacancy.setRequiredSkills(SkillParser.deDTOs(jobVacancyDTO.getRequiredSkills()));
 
         return jobVacancy;
 
