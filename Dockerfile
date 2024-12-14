@@ -1,25 +1,25 @@
-# Utiliza a imagem base do OpenJDK 8
-FROM openjdk:8-jdk-slim as build
+# Etapa 1: Build da aplicação
+FROM maven:3.8.6-openjdk-8 AS build
 
-# Copia os arquivos locais para o contêiner
 WORKDIR /app
-COPY mvnw .
-COPY .mvn .mvn
+
+# Copiar o pom.xml e src para o container
 COPY pom.xml .
-COPY src src
+COPY src ./src
 
-# Garante que mvnw tenha permissão de execução
-RUN chmod +x mvnw
+# Construir a aplicação (gera o .jar em target/)
+RUN mvn clean package -DskipTests
 
-# Constrói a aplicação usando Maven
-RUN ./mvnw package -DskipTests
+# Etapa 2: Imagem final com o JRE
+FROM openjdk:8-jre-slim
 
-# Empacota a aplicação com uma imagem OpenJDK Slim
-FROM openjdk:8-slim
-COPY --from=build /app/target/api-0.0.1-SNAPSHOT.jar app.jar
+WORKDIR /app
 
-# Expõe a porta que a aplicação utiliza
+# Copiar o arquivo .jar gerado na etapa de build
+COPY --from=build /app/target/pacto-0.0.1-SNAPSHOT.jar app.jar
+
+# Expor a porta usada pela aplicação
 EXPOSE 8080
 
-# Executa a aplicação
+# Comando de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]
