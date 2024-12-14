@@ -51,6 +51,8 @@ Para rodar a aplicação localmente, siga os passos abaixo:
 
 **Banco de Dados**: O banco de dados já está rodando em produção, então não é necessário configurar localmente para testes. A conexão está configurada diretamente na API.
 
+Se, por algum motivo, você precisar rodar o banco de dados localmente em vez de usar a versão em produção, Entre e contato comigo que fornecerei os scripts SQL
+
 ## **🔑 Credenciais de Login**
 
 **Usuário Comum:**
