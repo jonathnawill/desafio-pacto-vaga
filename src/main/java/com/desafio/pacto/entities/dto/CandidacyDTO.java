@@ -19,5 +19,7 @@ public class CandidacyDTO implements Serializable {
     private JobVacancyDTO jobVacancy;
     private UserDTO user;
     private String status;
+    private String additionalInfo;
+    private String feedback;
     private DateEntity dateEntity;
 }

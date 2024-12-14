@@ -26,6 +26,9 @@ public class Candidacy implements Serializable, DateInterface {
     @JoinColumn(name = "job_vacancy_id", nullable = false)
     private JobVacancy jobVacancy;
 
+    @Column(name = "ADDITIONAL_INFO", length = 1000)
+    private String additionalInfo;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "applicant_id", nullable = false)
     private User applicant;
@@ -33,6 +36,9 @@ public class Candidacy implements Serializable, DateInterface {
     @Convert(converter = CandidacyStatusEnumConverter.class)
     @Column(name = "ID_CANDIDACY_STATUS")
     private CandidacyStatusEnum status;
+
+    @Column(name = "FEEDBACK", length = 1000)
+    private String feedback;
 
     @Embedded
     private DateEntity dateEntity;

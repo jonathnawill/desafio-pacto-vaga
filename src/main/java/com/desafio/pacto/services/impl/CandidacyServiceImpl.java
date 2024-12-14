@@ -37,11 +37,18 @@ public class CandidacyServiceImpl implements CandidacyService {
     @Override
     public CandidacyDTO applyToJob(CandidacyDTO candidacyDTO) {
 
+
         JobVacancy jobVacancy = jobVacancyRepository.findById(candidacyDTO.getJobVacancy().getId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Vaga não encontrada"));
 
+
         User applicant = userRepository.findById(candidacyDTO.getUser().getId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+
+        boolean isAlreadyApplied = candidacyRepository.existsByJobVacancyAndApplicant(jobVacancy, applicant);
+        if (isAlreadyApplied) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Você já se inscreveu para esta vaga.");
+        }
 
 
         Candidacy candidacy = CandidacyParser.deDTO(candidacyDTO);
@@ -79,13 +86,14 @@ public class CandidacyServiceImpl implements CandidacyService {
 
     @Override
     @Transactional
-    public CandidacyDTO updateCandidacyStatus(Long candidacyId, String status) {
+    public CandidacyDTO updateCandidacyStatus(Long candidacyId, String status, String feedback) {
         Candidacy candidacy = candidacyRepository.findById(candidacyId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Candidatura não encontrada"));
 
         try {
             CandidacyStatusEnum newStatus = CandidacyStatusEnum.valueOf(status.toUpperCase());
             candidacy.setStatus(newStatus);
+            candidacy.setFeedback(feedback);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Status invalido");
         }
@@ -98,11 +106,29 @@ public class CandidacyServiceImpl implements CandidacyService {
     public CandidacyDTO deleteCandidacy(Long candidacyId) throws Exception {
         Optional<Candidacy> candidacy = candidacyRepository.findById(candidacyId);
 
-        if(candidacy.isPresent()) {
+        if (candidacy.isPresent()) {
             throw new Exception("Candidatura não encontrada");
         }
         candidacyRepository.deleteById(candidacyId);
         return CandidacyParser.toDTO(candidacy.get());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CandidacyDTO> listCandidaciesByAdmin(Long adminId) {
+        List<JobVacancy> jobVacancies = jobVacancyRepository.findByCreatedById(adminId);
+
+        List<Long> jobVacancyIds = jobVacancies.stream()
+                .map(JobVacancy::getId)
+                .collect(Collectors.toList());
+
+        List<Candidacy> candidacies = candidacyRepository.findByJobVacancyIdIn(jobVacancyIds);
+
+        return candidacies.stream()
+                .map(CandidacyParser::toDTO)
+                .collect(Collectors.toList());
+
+    }
 }
+
 

@@ -79,6 +79,14 @@ public class JobVancacyServiceImpl implements JobVacancyService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<JobVacancyDTO> listJobVancaciesByAdmin(Long adminId) {
+        List<JobVacancy> jobs = jobVacancyRepository.findByCreatedById(adminId);
+
+        return jobs.stream().map(JobVacancyParser::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
     public void deleteJobVacancy(Long jobId) {
 
         JobVacancy jobVacancy = jobVacancyRepository.findById(jobId).orElseThrow(() ->

@@ -11,5 +11,7 @@ public interface JobVacancyService {
 
     List<JobVacancyDTO> listJobVacancies();
 
+    List<JobVacancyDTO> listJobVancaciesByAdmin (Long adminId);
+
     void deleteJobVacancy(Long jobId);
 }

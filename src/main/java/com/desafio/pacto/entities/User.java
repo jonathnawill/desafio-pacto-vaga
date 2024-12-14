@@ -50,12 +50,12 @@ public class User implements Serializable, UserDetails, DateInterface{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        // Adicionando a autoridade baseada no role do usuário
-        authorities.add(new SimpleGrantedAuthority(this.userRole.getDescricao()));
-        authorities.add(new SimpleGrantedAuthority("DEFAULT_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.userRole.getDescricao()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_DEFAULT_USER"));
 
         return authorities;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

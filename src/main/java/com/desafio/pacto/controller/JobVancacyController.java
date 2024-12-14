@@ -23,6 +23,12 @@ public class JobVancacyController {
         return new ResponseEntity<>(createdJobVacancy, HttpStatus.CREATED);
     }
 
+    @GetMapping("/admin/list/{adminId}")
+    public ResponseEntity<List<JobVacancyDTO>> getAllJobVacancy(@PathVariable Long adminId) {
+        List<JobVacancyDTO> jobVacancyDTO = jobVacancyService.listJobVancaciesByAdmin(adminId);
+        return new ResponseEntity<>(jobVacancyDTO, HttpStatus.OK);
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<JobVacancyDTO>> listJobVacancies() {
         List<JobVacancyDTO> jobVacancies = jobVacancyService.listJobVacancies();

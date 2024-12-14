@@ -46,9 +46,15 @@ public class CandidacyController {
 
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<CandidacyDTO> updateCandidacyStatus(@PathVariable Long id, @RequestParam String status) {
-        CandidacyDTO updatedCandidacy = candidacyService.updateCandidacyStatus(id, status);
+    public ResponseEntity<CandidacyDTO> updateCandidacyStatus(@PathVariable Long id, @RequestParam String status, @RequestParam String feedback) {
+        CandidacyDTO updatedCandidacy = candidacyService.updateCandidacyStatus(id, status, feedback);
         return new ResponseEntity<>(updatedCandidacy, HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/{adminId}")
+    public ResponseEntity<List<CandidacyDTO>> listCandidaciesByAdmin(@PathVariable Long adminId) {
+        List<CandidacyDTO> candidacies = candidacyService.listCandidaciesByAdmin(adminId);
+        return new ResponseEntity<>(candidacies, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

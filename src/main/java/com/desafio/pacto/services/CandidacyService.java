@@ -14,9 +14,11 @@ public interface CandidacyService {
 
     List<CandidacyDTO> listCandidaciesByApplicant(Long applicantId);
 
-    CandidacyDTO updateCandidacyStatus(Long candidacyId, String status);
+    CandidacyDTO updateCandidacyStatus(Long candidacyId, String status, String feedback);
 
     CandidacyDTO deleteCandidacy(Long candidacyId) throws Exception;
+
+    List<CandidacyDTO> listCandidaciesByAdmin(Long adminId);
 
 
 }

@@ -34,6 +34,9 @@ public class JobVacancy implements Serializable, DateInterface{
     @JoinTable(name = "JOB_VACANCY_SKILL", joinColumns = @JoinColumn(name = "id_job_vacancy"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
     private List<Skill> requiredSkills = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jobVacancy", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Candidacy> candidacies;
+
     @Embedded
     private DateEntity dateEntity;
 }
